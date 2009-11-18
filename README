@@ -1,0 +1,24 @@
+A simple script to filter and summarize apache access logs.
+
+2 apache log formats are supported 
+
+"%v:%p %h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\""
+"%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\""
+
+Input is read from STDIN and output produced to STDOUT.
+
+The following fields names are supported.
+host,ip,q,r,date,type,url,httpversion,status,length,ref,ua
+
+
+e.g
+
+To get a count by ip "cat log | ./weblogs.pl ip"
+
+To get a count by ip where no referer was set "cat log | ./weblogs.pl ref=^-$ ip"
+
+To get a count by ip where a referer was set "cat log | ./weblogs.pl ref-^-$ ip"
+
+To filter out my own ip 1.1.1.1 and firefox and then count by http version and status. "cat log | ./weblogs.pl ip-1\.1\.1\.1 ua-firefox httpversion status"
+
+To view the raw log for all 404 "cat log | ./weblogs.pl status=404"
