@@ -123,7 +123,7 @@ sub parse
 
 	chomp($line);
 
-	if( $line =~ /^(\d{1,2}-combined_log)?:?([\S]*)\s+([0-9.:a-z]+|::1) ([^ ]+) ([^ ]+) \[([^]]+)\] (("([A-Z]+) ([^ ]+?)\s+(?:main.php\s*)?(HTTP[^"]+)")|"") ([^ ]+) ([^ ]+) "([^"]*[^\\]|f{0})" "(.*)"$/ )
+	if( $line =~ /^(\d{1,2}-combined_log)?:?(\S+ |)([0-9.:a-z]+|::1) ([^ ]+) ([^ ]+) \[([^]]+)\] (("([A-Z]+) ([^ ]+?)\s+(HTTP[^"]+)")|"") ([^ ]+) ([^ ]+) "([^"]*[^\\]|f{0})" "(.*)"$/ )
         {
                 #14-combined_log:65.214.44.96 - - [14/Jul/2006:04:35:48 +0100] "GET /~link HTTP/1.0" 301 400 "-" "Mozilla/2.0 (compatible; Ask Jeeves/Teoma; +http://sp.ask.com/docs/about/tech_crawling.html)"
                 #208.17.184.59 - - [16/Jul/2006:00:11:36 +0100] "GET / HTTP/1.1" 302 - "" "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.7.12) Gecko/20050922 Fedora/1.0.7-1.1.fc4 Firefox/1.0.7"
@@ -134,6 +134,7 @@ sub parse
 		{
 			$hash{"url"} = "";
 		}
+		$hash{"host"} =~ s/ +$//;
 		$hash{"record"} = $line;
 		return \%hash;
         }
